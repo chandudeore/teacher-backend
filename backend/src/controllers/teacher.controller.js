@@ -16,6 +16,8 @@ router.post("", async (req, res) => {
 
 router.get("", async (req, res) => {
   try {
+    const page = req.body.page || 1;
+    const size = req.body.size;
     const teacher = await Teacher.find()
       .populate({ path: "class_id", select: ["className", "subject"] })
       .lean()
