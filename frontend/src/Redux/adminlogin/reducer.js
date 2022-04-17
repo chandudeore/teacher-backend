@@ -3,6 +3,7 @@ import { LOGIN_ERROR, LOGIN_LOADING, LOGIN_SUCCESS } from "./action";
 const initialState = {
   loading: false,
   error: false,
+  isAuthenticated: false,
   token: "",
   username: "",
 };
@@ -16,11 +17,12 @@ export const adminReducer = (store = initialState, { type, payload }) => {
         ...store,
         loading: false,
         error: false,
+        isAuthenticated: true,
         token: payload.token,
         username: payload.username,
       };
     case LOGIN_ERROR:
-      return { ...store, loading: false, error: false };
+      return { ...store, loading: false, error: false, isAuthenticated: false };
     default:
       return store;
   }
