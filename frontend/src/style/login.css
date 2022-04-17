@@ -1,0 +1,19 @@
+.input1{
+    margin-top: 30px;
+    padding: 3px 10px;
+    border-radius: 5px;
+}
+.loginbtn{
+    margin-top: 20px;
+    padding: 8px 30px;
+    background-color: #4564ff;
+    border: transparent;
+    border-radius: 5px;
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+}
+.loginbtn:hover{
+    color: #ff0044;
+    background-color: black;
+}

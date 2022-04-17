@@ -7,6 +7,25 @@ const newToken = (admin) => {
   return jwt.sign({ admin }, process.env.JWT_SECRET_KEY);
 };
 
+const register = async (req, res) => {
+  try {
+    let admin = await Admin.findOne({ username: req.body.username })
+      .lean()
+      .exec();
+
+    if (admin)
+      return res.status(400).send({ message: "Please try another email" });
+
+    admin = await Admin.create(req.body);
+
+    const token = newToken(admin);
+
+    res.send({ admin, token });
+  } catch (e) {
+    res.status(500).send(e.message);
+  }
+};
+
 const login = async (req, res) => {
   try {
     const admin = await Admin.findOne({ username: req.body.username });
@@ -25,4 +44,4 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { login };
+module.exports = { register, login };

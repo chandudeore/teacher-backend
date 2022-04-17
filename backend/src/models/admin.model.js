@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 const adminSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     username: { type: String, required: true, maxlength: 10 },
     password: { type: String, required: true, unique: true },
-    teacher_id: { type: mongoose.Schema.Types.ObjectId, ref: "teacher" },
   },
   {
     timestamps: true,

@@ -1,6 +1,7 @@
 import { combineReducers, createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import { adminReducer } from "./adminlogin/reducer";
+import { teacherDataReducer } from "./TeacherData/reducer";
 
 const composeEnhancers =
   typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -18,6 +19,7 @@ const enhancer = composeEnhancers(
 
 const rootReducer = combineReducers({
   login: adminReducer,
+  teachData: teacherDataReducer,
 });
 
 export const store = createStore(rootReducer, enhancer);
