@@ -1,30 +1,28 @@
-const express = require("express");
+require("dotenv").config();
 
 const Admin = require("../models/admin.model");
+const jwt = require("jsonwebtoken");
 
-const router = express.Router();
+const newToken = (admin) => {
+  return jwt.sign({ admin }, process.env.JWT_SECRET_KEY);
+};
 
-router.post("", async (req, res) => {
+const login = async (req, res) => {
   try {
-    const admin = await Admin.create(req.body);
+    const admin = await Admin.findOne({ username: req.body.username });
 
-    return res.status(201).send(admin);
+    if (!admin)
+      return res.status(400).json({ message: "Enter another username" });
+    const match = admin.checkPassword(req.body.password);
+    if (!match)
+      return res.status(400).json({ message: "Enter another Password" });
+
+    const token = newToken(admin);
+
+    res.send({ admin, token });
   } catch (err) {
-    res.status(500).json({ message: "Something get Wrong" });
+    res.status(500).json({ message: "error" });
   }
-});
+};
 
-router.get("", async (req, res) => {
-  try {
-    const admin = await Admin.find()
-      .populate({ path: "teacher_id", select: ["name", "gender", "age"] })
-      .lean()
-      .exec();
-
-    return res.status(201).send(admin);
-  } catch (err) {
-    res.status(500).json({ message: "Something get Wrong" });
-  }
-});
-
-module.exports = router;
+module.exports = { login };

@@ -3,15 +3,14 @@ const express = require("express");
 const connect = require("./config/db");
 const port = process.env.PORT || 8080;
 
-const adminController = require("./controllers/admin.controllers");
 const teacherController = require("./controllers/teacher.controller");
 const classesController = require("./controllers/classes.controller");
-
+const { login } = require("./controllers/admin.controllers");
 const app = express();
 
 app.use(express.json());
 
-app.use("/admin", adminController);
+app.use("/admin-login", login);
 app.use("/teacher", teacherController);
 app.use("/classes", classesController);
 app.listen(port, async () => {
