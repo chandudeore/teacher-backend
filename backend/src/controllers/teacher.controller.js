@@ -14,7 +14,7 @@ router.post("", async (req, res) => {
   }
 });
 
-router.get("", async (req, res) => {
+router.get("/t", async (req, res) => {
   try {
     const page = req.query.page;
 
@@ -24,22 +24,8 @@ router.get("", async (req, res) => {
       .populate({ path: "class_id", select: ["className", "subject"] })
       .lean()
       .exec();
-    console.log(req.query.srt);
-    //let res = req.query.srt;
-    //console.log(res);
-    // if (res === "asc") {
-    //   teacher.sort((a, b) => {
-    //     return a.age - b.age;
-    //   });
-    //   return res.send(teacher);
-    // }
-    // if (res === "dsc") {
-    //   console.log(res);
-    //   teacher.sort((a, b) => {
-    //     return b.age - a.age;
-    //   });
-    //   return res.send(teacher);
-    // }
+    // console.log(req.query.srt);
+    let res = req.query.sort;
 
     return res.status(202).send(teacher);
   } catch (err) {
